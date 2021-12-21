@@ -1,18 +1,15 @@
 import React, {createContext} from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import UserStore from "./store/UserStore";
-import DeviceStore from "./store/DeviceStore";
+import { store } from './store';
+import { Provider } from 'react-redux'
 
 export const Context = createContext(null)
 
 ReactDOM.render(
-    <Context.Provider value={{
-        user: new UserStore(),
-        device: new DeviceStore(),
-    }}>
+    <Provider store={store}>
         <App />
-    </Context.Provider>,
+    </Provider>,
   document.getElementById('root')
 );
 
