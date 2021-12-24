@@ -1,14 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { useLocation, NavLink } from 'react-router-dom';
-import { login_route, register_route } from '../utils/consts';
+import { useLocation, NavLink, useHistory } from 'react-router-dom';
+import { login_route, register_route, shop_route } from '../utils/consts';
 import { Form, Input, Button } from 'element-react';
 import { setLogin, unsetLogin } from '../store/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '../styles/authForm.scss';
 import { registration, login } from '../utils/axios/userAPI';
 
 const Auth = () => {
-  const user = useSelector((state) => state.user.isAuth);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const formRef = useRef();
@@ -59,21 +59,19 @@ const Auth = () => {
   };
 
   const authFunc = async () => {
-    let response;
     try {
-
       if (isLogin) {
-        response = await login(form.email, form.password);
+        await login(form.email, form.password);
       } else {
-        response = await registration(form.email, form.password);
+        await registration(form.email, form.password);
       }
 
-      dispatch(setLogin)
+      dispatch(setLogin());
+      history.push(shop_route);
     } catch (e) {
-      dispatch(unsetLogin)
-      console.log('error', e)
+      dispatch(unsetLogin());
+      console.log('error', e);
     }
-    console.log('response', response);
   };
 
   const onSubmit = (e) => {

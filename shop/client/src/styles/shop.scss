@@ -1,5 +1,22 @@
 .shop-page {
 	width: 100%;
 	display: flex;
-	flex-wrap: wrap;
+	justify-content: space-between;
+
+	&__filters {
+		width: 25%;
+	}
+
+	&__products {
+		width: 70%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__brands {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 10px 20px;
+	}
 }

@@ -1,25 +1,38 @@
-import React from 'react';
-// import { setLogin, unsetLogin } from '../store/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Product from '../components/Product/Product';
-import '../styles/shop.scss'
+import FilterBar from '../components/FilterBar/FilterBar';
+import BrandBar from '../components/BrandBar/BrandBar';
+import { fetchBrand, fetchProducts, fetchType } from '../utils/axios/productAPI';
+import { getType, getBrand, getProduct } from '../store/slices/productSlice';
+import '../styles/shop.scss';
 
 const Shop = () => {
-  // const auth = useSelector((state) => state.user.isAuth);
-  // const dispatch = useDispatch();
   const productList = useSelector((state) => state.product.products);
+  const productType = useSelector((state) => state.product.types);
+  const productBrand = useSelector((state) => state.product.brands);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchType().then((data) => dispatch(getType(data)));
+    fetchBrand().then((data) => dispatch(getBrand(data)));
+    fetchProducts().then(data => dispatch(getProduct(data.rows)));
+  }, [dispatch]);
 
   return (
     <div className='shop-page'>
-      {productList
-        ? productList.map((elem) => {
-            console.log('elem', elem);
-            return <Product key={elem.id} info={elem} />;
-          })
-        : ''}
-      {/* {auth ? <p>login</p> : <p>unlogin</p>}
-      <button onClick={() => dispatch(setLogin())}>set login</button>
-      <button onClick={() => dispatch(unsetLogin())}>unset login</button> */}
+      <div className='shop-page__filters'>{productType ? <FilterBar info={productType} /> : ''}</div>
+      <div className='shop-page__products'>
+        {productBrand ? (
+          <div className='shop-page__brands'>
+            <BrandBar info={productBrand} />
+          </div>
+        ) : (
+          ''
+        )}
+
+        {productList ? productList.map((elem) => <Product key={elem.id} info={elem} />) : ''}
+      </div>
     </div>
   );
 };

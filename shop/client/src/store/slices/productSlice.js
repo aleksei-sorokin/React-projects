@@ -3,42 +3,27 @@ import {createSlice} from '@reduxjs/toolkit'
 const productSlice = createSlice({
 	name: 'productSlice',
 	initialState: {
-		types: [
-			{id: 1, name: 'first type'},
-			{id: 2, name: 'second type'}
-		],
-		brands: [
-			{id: 1, name: 'first brand'},
-			{id: 2, name: 'second brand'}
-		],
-		products: [
-			{
-				id: 1, 
-				name: 'first product',
-				price: 100,
-				rating: 4,
-				img: ''
-			},
-			{
-				id: 2, name: 'second product',
-				price: 120,
-				rating: 5,
-				img: ''
-			}
-		]
+		selectedType: 0,
+		selectedBrand: 0,
+		types: [],
+		brands: [],
+		products: []
 	},
 	reducers: {
-		addType(state, action) {
-			state.types.push(action.payload)
+		getType(state, action) {
+			state.types = [...action.payload]
 		},
-		addBrand(state, action) {
-			state.brands.push(action.payload)
+		getBrand(state, action) {
+			state.brands = [...action.payload]
 		},
-		addProduct(state, action) {
-			state.products.push(action.payload)
+		getProduct(state, action) {
+			state.products = [...action.payload]
+		},
+		setSelected(state, action) {
+			state[`selected${action.payload.type}`] = action.payload.id
 		}
 	}
 })
 
 export default productSlice.reducer
-export const {addType, addBrand, addProduct} = productSlice.actions
+export const {getType, getBrand, getProduct, setSelected} = productSlice.actions

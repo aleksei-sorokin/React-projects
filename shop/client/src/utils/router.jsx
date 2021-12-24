@@ -2,9 +2,10 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
 import { shop_route } from './consts';
+import { useSelector } from 'react-redux';
 
 const Router = () => {
-  const isAuth = false;
+  const isAuth = useSelector((state) => state.user.isAuth);
   return (
     <Switch>
       {isAuth &&
