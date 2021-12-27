@@ -1,27 +1,44 @@
 import React, { useState, useRef } from 'react';
 import { Form, Input, Button } from 'element-react';
+import { createType } from '../../../utils/axios/productAPI';
 
-const DialogType = ({}) => {
-  const [type, setType] = useState();
-	const formRef = useRef();
-
-	const onSubmit = (e) => {
-    e.preventDefault();
-    // formRef.current.validate((valid) => {
-    //   if (valid) {
-    //     authFunc();
-    //   } else {
-    //     console.log('error submit!!');
-    //     return false;
-    //   }
-    // });
+const DialogType = ({ hideDialog }) => {
+  const formRef = useRef();
+  const rules = {
+    type: [{ required: true, message: 'Введите тип', trigger: 'blur' }],
   };
+
+  const [form, setForm] = useState({
+    type: '',
+  });
+
+  const onChange = (key, value) => {
+    setForm({ ...form, [key]: value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    formRef.current.validate((valid) => {
+      if (valid) {
+        createType({name: form.type}).then(() => {
+          hideDialog();
+          setForm({ type: '' });
+          hideDialog();
+        });
+        console.log('valid');
+      } else {
+        console.log('error submit!!');
+        return false;
+      }
+    });
+  };
+
   return (
     <div>
       <p>Добавить тип</p>
-      <Form labelWidth='120' labelPosition='top' onSubmit={onSubmit.bind(this)}>
-        <Form.Item>
-          <Input value={type} type='text' name='type' onChange={e => setType(e)}></Input>
+      <Form ref={formRef} model={form} rules={rules} labelWidth='120' labelPosition='top' onSubmit={onSubmit.bind(this)}>
+        <Form.Item prop='type'>
+          <Input value={form.type} type='text' name='type' onChange={onChange.bind(this, 'type')}></Input>
         </Form.Item>
         <Form.Item>
           <Button nativeType='submit' type='primary'>

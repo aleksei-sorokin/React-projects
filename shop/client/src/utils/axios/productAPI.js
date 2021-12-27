@@ -3,7 +3,7 @@ import { $authHost, $host } from "./index";
 
 
 export const createType = async (type) => {
-	const {data} = await $authHost.post('api/type')
+	const {data} = await $authHost.post('api/type', type )
 	return data
 }
 
@@ -13,7 +13,7 @@ export const fetchType = async () => {
 }
 
 export const createBrand = async (brand) => {
-	const {data} = await $authHost.post('api/brand')
+	const {data} = await $authHost.post('api/brand', brand)
 	return data
 }
 

@@ -30,7 +30,7 @@ const DialogMain = () => {
 
   return (
     <Dialog visible={dialogVisible} onCancel={hideDialog}>
-      <Dialog.Body>{dialogName ? <DialogShow /> : ''}</Dialog.Body>
+      <Dialog.Body>{dialogName ? <DialogShow hideDialog={hideDialog} /> : ''}</Dialog.Body>
     </Dialog>
   );
 };
