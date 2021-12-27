@@ -44,14 +44,14 @@ const DialogProduct = ({ hideDialog }) => {
       <p>Добавить товар</p>
       <Form labelWidth='120' labelPosition='top' onSubmit={onSubmit.bind(this)}>
         <Form.Item label={'Выберите тип'}>
-          <Select value={form.type}>
+          <Select value={form.type} placeholder='Выберите тип' onChange={onChange.bind(this, 'type')}>
             {types.map((el) => {
               return <Select.Option key={el.id} label={el.name} value={el.id} />;
             })}
           </Select>
         </Form.Item>
         <Form.Item label={'Выберите бренд'}>
-          <Select value={form.type}>
+          <Select value={form.brand} placeholder='Выберите бренд' onChange={onChange.bind(this, 'brand')}>
             {brands.map((el) => {
               return <Select.Option key={el.id} label={el.name} value={el.id} />;
             })}
@@ -63,9 +63,7 @@ const DialogProduct = ({ hideDialog }) => {
         <Form.Item label={'Цена'}>
           <Input value={form.price} type='number' name='price' onChange={onChange.bind(this, 'price')}></Input>
         </Form.Item>
-        <Form.Item label={'Рейтинг'}>
-          <Input value={form.rating} type='text' name='rating' onChange={onChange.bind(this, 'rating')}></Input>
-        </Form.Item>
+      
         <Form.Item label={'Изображение'}>
           <Upload action='//jsonplaceholder.typicode.com/posts/' listType='picture-card' onPreview={(file) => selectFile(file)} />
           <Dialog visible={dialogVisible} size='tiny' onCancel={() => setDialogVisible(false)}>
