@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Form, Input, Button } from 'element-react';
+import { Form, Input, Button, Notification } from 'element-react';
 import { createType } from '../../../utils/axios/productAPI';
 
 const DialogType = ({ hideDialog }) => {
@@ -20,14 +20,25 @@ const DialogType = ({ hideDialog }) => {
     e.preventDefault();
     formRef.current.validate((valid) => {
       if (valid) {
-        createType({name: form.type}).then(() => {
-          hideDialog();
-          setForm({ type: '' });
-          hideDialog();
-        });
-        console.log('valid');
+        createType({ name: form.type })
+          .then(() => {
+            hideDialog();
+            setForm({ type: '' });
+            hideDialog();
+            Notification({
+              title: 'Успех',
+              message: 'Тип добавлен',
+              type: 'success',
+            });
+          })
+          .catch((e) => {
+            Notification({
+              title: 'Что-то пошло не так',
+              message: e,
+              type: 'error',
+            });
+          });
       } else {
-        console.log('error submit!!');
         return false;
       }
     });

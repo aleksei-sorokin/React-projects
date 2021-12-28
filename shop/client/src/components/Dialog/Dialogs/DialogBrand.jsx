@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Form, Input, Button } from 'element-react';
+import { Form, Input, Button, Notification } from 'element-react';
 import { createBrand } from '../../../utils/axios/productAPI';
 
-const DialogBrand = ({hideDialog}) => {
+const DialogBrand = ({ hideDialog }) => {
   const formRef = useRef();
   const rules = {
     brand: [{ required: true, message: 'Введите бренд', trigger: 'blur' }],
@@ -20,18 +20,29 @@ const DialogBrand = ({hideDialog}) => {
     e.preventDefault();
     formRef.current.validate((valid) => {
       if (valid) {
-        createBrand({name: form.brand}).then(() => {
-          hideDialog();
-          setForm({ brand: '' });
-          hideDialog();
-        });
+        createBrand({ name: form.brand })
+          .then(() => {
+            hideDialog();
+            setForm({ brand: '' });
+            hideDialog();
+            Notification({
+              title: 'Успех',
+              message: 'Бренд добавлен',
+              type: 'success',
+            });
+          })
+          .catch((e) => {
+            Notification({
+              title: 'Что-то пошло не так',
+              message: e,
+              type: 'error',
+            });
+          });
       } else {
-        console.log('error submit!!');
         return false;
       }
     });
   };
-  
 
   return (
     <div>
