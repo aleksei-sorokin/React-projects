@@ -144,7 +144,7 @@ const DialogProduct = ({ hideDialog }) => {
 
         <Form.Item label={'Изображение'} prop='img'>
           <Input type='hidden' name='img' value={imageUrl} />
-          <Upload multiple={false} action='//jsonplaceholder.typicode.com/posts/' listType='picture-card' beforeUpload={(file) => selectFile(file)}>
+          <Upload multiple={false} action={process.env.REACT_APP_API_URL} listType='picture-card' beforeUpload={(file) => selectFile(file)}>
             {imageUrl ? <img src={imageUrl} alt={form.name} className='avatar' /> : <i className='el-icon-plus avatar-uploader-icon'></i>}
           </Upload>
         </Form.Item>
