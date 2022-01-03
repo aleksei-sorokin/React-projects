@@ -17,7 +17,7 @@ const App = () => {
     if (token) {
       check()
         .then((data) => {
-          dispatch(setLogin());
+          dispatch(setLogin(data.id));
         })
         .catch(() => {
           dispatch(unsetLogin());

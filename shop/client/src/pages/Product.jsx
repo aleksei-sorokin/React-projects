@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProduct } from '../utils/axios/productAPI';
+import { fetchProduct, basket, basketGet } from '../utils/axios/productAPI';
 import { Button } from 'element-react';
 import placeholder from '../assets/images/placeholder.png';
 import star from '../assets/images/star.png';
 import '../styles/product-detail.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { basketAdd } from '../store/slices/basketSlice';
 
 const Product = () => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
+  const userId = useSelector(state => state.user.id)
+
+
+  const dispatch = useDispatch();
+
+  const book = () => {
+    dispatch(basketAdd(device))
+    basket(device)
+    basketGet({userId})
+  }
+
 
   useEffect(() => {
     fetchProduct(id).then((data) => {
@@ -27,7 +40,7 @@ const Product = () => {
         <div className='product-page__price'>
           цена: <b>{device.price}</b>
         </div>
-        <Button type='primary'>Купить</Button>
+        <Button onClick={book} type='primary'>Купить</Button>
       </div>
 
       <div className='product-page__desc'>

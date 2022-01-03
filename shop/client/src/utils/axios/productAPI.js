@@ -26,6 +26,21 @@ export const createProduct = async (product) => {
   return data;
 };
 
+export const basket = async (basket) => {
+  const {data} = await $authHost.post('api/basket', basket);
+  return data;
+}
+
+export const basketGet = async (id) => {
+  const {data} = await $authHost.get('api/basket', id);
+  return data;
+}
+
+export const rating = async (rating) => {
+  const {data} = await $authHost.post('api/rating', rating);
+  return data;
+}
+
 export const fetchProducts = async (typeId, brandId, page, limit = 5) => {
   const { data } = await $host.get('api/device', {
     params: {
