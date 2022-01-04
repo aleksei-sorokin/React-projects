@@ -7,8 +7,7 @@ const basketSlice = createSlice({
 	},
 	reducers: {
 		basketAdd(state, action) {
-			state.basket.push(action.payload)
-			state.basket.push(action.payload)
+			state.basket = action.payload
 		}
 	}
 })

@@ -1,23 +1,30 @@
-const {Basket} = require('../models/models')
+const { Basket, BasketDevice } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class BasketController {
-    async create(req, res) {
-				const {basket} = req.body;
-        const info = await Basket.create({basket})
-        return res.json(info)
-    }
-    async get(req, res) {
-				const {id} = req.params
-				console.log('id', id)
-        const basket = await Basket.findOne(
-            {
-                where: {id},
-            },
-        )
-        return res.json(basket)
-    }
+  async add(req, res) {
+    const { userId, product } = req.body;
+    const basket = await Basket.findOne({
+      where: { userId },
+      include: [{model: BasketDevice, as: 'basket_devices'}]
+    });
+    
+    const device = await BasketDevice.create({
+        basketId: basket.id,
+        deviceId: product
+    })
 
+    const info = await basket.update({ basket_devices: device, updatedAt: new Date() }, { where: { userId: 2 } });
+    return res.json(info);
+  }
+  async get(req, res) {
+    const { userId } = req.params;
+    const basket = await Basket.findOne({
+      where: { userId },
+      include: [{ model: BasketDevice, as: 'basket_devices' }],
+    });
+    return res.json(basket);
+  }
 }
 
-module.exports = new BasketController()
+module.exports = new BasketController();

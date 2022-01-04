@@ -26,13 +26,17 @@ export const createProduct = async (product) => {
   return data;
 };
 
-export const basket = async (basket) => {
-  const {data} = await $authHost.post('api/basket', basket);
+export const basket = async ({userId, product}) => {
+  const device = {
+    userId,
+    product
+  }
+  const {data} = await $authHost.post('api/basket', device);
   return data;
 }
 
-export const basketGet = async (id) => {
-  const {data} = await $authHost.get('api/basket', id);
+export const basketGet = async (userId) => {
+  const {data} = await $authHost.get('api/basket/' + userId);
   return data;
 }
 

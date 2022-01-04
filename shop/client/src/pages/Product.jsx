@@ -11,17 +11,14 @@ import { basketAdd } from '../store/slices/basketSlice';
 const Product = () => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
-  const userId = useSelector(state => state.user.id)
-
+  const userId = useSelector((state) => state.user.id);
 
   const dispatch = useDispatch();
 
-  const book = () => {
-    dispatch(basketAdd(device))
-    basket(device)
-    basketGet({userId})
-  }
-
+  const book = async () => {
+    await basket({ userId, product: Number(id) });
+    await basketGet(userId);
+  };
 
   useEffect(() => {
     fetchProduct(id).then((data) => {
@@ -40,7 +37,9 @@ const Product = () => {
         <div className='product-page__price'>
           цена: <b>{device.price}</b>
         </div>
-        <Button onClick={book} type='primary'>Купить</Button>
+        <Button onClick={book} type='primary'>
+          Купить
+        </Button>
       </div>
 
       <div className='product-page__desc'>

@@ -2,7 +2,7 @@ const Router = require('express')
 const router = new Router()
 const basketController = require('../controllers/basketController')
 
-router.post('/', basketController.create)
-router.get('/:id', basketController.get)
+router.post('/', basketController.add)
+router.get('/:userId', basketController.get)
 
 module.exports = router
