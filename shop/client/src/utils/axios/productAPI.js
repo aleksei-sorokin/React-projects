@@ -40,6 +40,21 @@ export const basketGet = async (userId) => {
   return data;
 }
 
+export const basketDeleteAll = async (userId) => {
+  const {data} = await $authHost.delete('api/basket/' + userId);
+  return data;
+}
+
+
+export const basketDeleteOne = async ({userId, product}) => {
+  const device = {
+    product
+  }
+  const {data} = await $authHost.post('api/basket/' + userId, device);
+  return data;
+}
+
+
 export const rating = async (rating) => {
   const {data} = await $authHost.post('api/rating', rating);
   return data;

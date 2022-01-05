@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { fetchProduct, basket, basketGet } from '../utils/axios/productAPI';
 import { Button } from 'element-react';
 import placeholder from '../assets/images/placeholder.png';
@@ -8,16 +8,18 @@ import '../styles/product-detail.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { basketAdd } from '../store/slices/basketSlice';
 
+import { basket_route } from '../utils/consts';
+
 const Product = () => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
   const userId = useSelector((state) => state.user.id);
-
+  const basketItems = useSelector((state) => state.basket.basket);
   const dispatch = useDispatch();
 
   const book = async () => {
     await basket({ userId, product: Number(id) });
-    await basketGet(userId);
+    await basketGet(userId).then((data) => (data.basket_devices ? dispatch(basketAdd(data.basket_devices)) : ''));
   };
 
   useEffect(() => {
@@ -37,9 +39,13 @@ const Product = () => {
         <div className='product-page__price'>
           цена: <b>{device.price}</b>
         </div>
-        <Button onClick={book} type='primary'>
-          Купить
-        </Button>
+        {basketItems.find((elem) => elem.deviceId === device.id) ? (
+          <NavLink to={basket_route}>В корзину</NavLink>
+        ) : (
+          <Button onClick={book} type='primary'>
+            Купить
+          </Button>
+        )}
       </div>
 
       <div className='product-page__desc'>

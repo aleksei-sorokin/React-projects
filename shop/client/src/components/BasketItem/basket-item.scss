@@ -1,0 +1,55 @@
+.basket__item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+	border: 1px solid lightgray;
+	border-radius: 4px;
+	padding: 5px 0 5px 5px;
+  position: relative;
+
+  &-img {
+    width: 30%;
+    flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+  }
+
+  &-title {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  &-info {
+    width: 100%;
+  }
+
+  &-opt {
+    margin-bottom: 10px;
+
+    &-item {
+      background-color: #fff;
+      display: flex;
+      padding: 3px;
+
+      &:nth-child(even) {
+        background-color: lightgray;
+      }
+
+      span {
+        font-weight: bold;
+        width: 35%;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &-delete {
+    position: absolute;
+    font-size: 18px;
+    right: 5px;
+    top: 0px;
+    cursor: pointer;
+  }
+}
