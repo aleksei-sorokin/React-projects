@@ -31,8 +31,8 @@ const Basket = () => {
     fetchData();
   }, [basket]);
 
-  const buy = () => {
-    basketDeleteAll(id);
+  const buy = (userId) => {
+    basketDeleteAll(userId);
     dispatch(basketClear());
   };
 
@@ -49,7 +49,7 @@ const Basket = () => {
       {basket_devices.length ? (
         <div className='basket__bottom'>
           <div>Общая стоимость: {basket_price}</div>
-          <Button onClick={buy}>Купить</Button>
+          <Button onClick={buy(id)}>Купить</Button>
         </div>
       ) : (
         ''

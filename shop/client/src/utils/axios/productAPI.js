@@ -54,8 +54,17 @@ export const basketDeleteOne = async ({userId, product}) => {
   return data;
 }
 
+export const ratingAll = async () => {
+  const {data} = await $host.get('api/rating');
+  return data;
+}
 
-export const rating = async (rating) => {
+export const ratingGet = async (id) => {
+  const {data} = await $authHost.get('api/rating/' + id);
+  return data;
+}
+
+export const ratingAdd = async (rating) => {
   const {data} = await $authHost.post('api/rating', rating);
   return data;
 }
@@ -71,6 +80,7 @@ export const fetchProducts = async (typeId, brandId, page, limit = 5) => {
   });
   return data;
 };
+
 
 export const fetchProduct = async (id) => {
   const { data } = await $host.get('api/device/' + id);
