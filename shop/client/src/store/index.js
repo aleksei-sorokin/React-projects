@@ -1,8 +1,13 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore, applyMiddleware} from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga'
 import productSlice from './slices/productSlice';
 import userSlice from './slices/userSlice';
 import dialogSlice from './slices/dialogSlice';
 import basketSlice from './slices/basketSlice';
+
+const sagaMiddleware = createSagaMiddleware({
+
+});
 
 const rootReducer = combineReducers({
 	user: userSlice,
@@ -12,5 +17,6 @@ const rootReducer = combineReducers({
 });
 
 export const store = configureStore({
-	reducer: rootReducer
+	reducer: rootReducer,
+	middleware: sagaMiddleware
 })
